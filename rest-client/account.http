@@ -1,0 +1,10 @@
+# Accounts
+
+# @name createAccount
+POST {{baseUrl}}/accounts
+Content-Type: application/json
+
+{
+  "userOwner": "golang",
+  "currency": "EUR"
+}
