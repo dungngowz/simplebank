@@ -1,3 +1,7 @@
+-- SQL dump generated using DBML (dbml-lang.org)
+-- Database: PostgreSQL
+-- Generated at: 2022-05-13T16:36:02.297Z
+
 CREATE TABLE "users" (
   "id" bigserial PRIMARY KEY,
   "username" varchar,
