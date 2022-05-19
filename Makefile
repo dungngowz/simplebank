@@ -26,8 +26,9 @@ sqlc:
 
 test:
 	go test -v -cover ./...
-server:
-	go run main.go
+
+dev-server:
+	nodemon --exec go run main.go --signal SIGTERM
 
 build-image-app:
 	docker build -t simple_bank:latest . 

@@ -8,5 +8,11 @@
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.organizeImports": true
+  },
+  "[sql]": {
+    "editor.defaultFormatter": "bradymholt.pgformatter"
+  },
+  "[go]": {
+    "editor.defaultFormatter": "golang.go"
   }
 }

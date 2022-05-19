@@ -1,0 +1,12 @@
+# Users
+
+# @name createUser
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "username": "!@#",
+  "hashedPassword": "EUR",
+  "fullname": "fullname",
+  "email": "email"
+}

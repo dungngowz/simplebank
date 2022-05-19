@@ -1,10 +1,10 @@
 -- SQL dump generated using DBML (dbml-lang.org)
 -- Database: PostgreSQL
--- Generated at: 2022-05-13T16:36:02.297Z
+-- Generated at: 2022-05-19T01:44:45.059Z
 
 CREATE TABLE "users" (
   "id" bigserial PRIMARY KEY,
-  "username" varchar,
+  "username" varchar NOT NULL,
   "hashed_password" varchar NOT NULL,
   "fullname" varchar NOT NULL,
   "email" varchar UNIQUE NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE "users" (
 
 CREATE TABLE "accounts" (
   "id" bigserial PRIMARY KEY,
-  "owner" bigserial NOT NULL,
+  "user_id" bigserial NOT NULL,
   "balance" bigint NOT NULL,
   "currency" varchar NOT NULL,
   "created_at" timestamptz NOT NULL DEFAULT (now())
@@ -35,9 +35,9 @@ CREATE TABLE "transfers" (
   "created_at" timestamptz NOT NULL DEFAULT (now())
 );
 
-CREATE INDEX ON "accounts" ("owner");
+CREATE INDEX ON "accounts" ("user_id");
 
-CREATE UNIQUE INDEX ON "accounts" ("owner", "currency");
+CREATE UNIQUE INDEX ON "accounts" ("user_id", "currency");
 
 CREATE INDEX ON "entries" ("account_id");
 
@@ -51,7 +51,7 @@ COMMENT ON COLUMN "entries"."amount" IS 'can be negative or positive';
 
 COMMENT ON COLUMN "transfers"."amount" IS 'must be positive';
 
-ALTER TABLE "accounts" ADD FOREIGN KEY ("owner") REFERENCES "users" ("id");
+ALTER TABLE "accounts" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
 
 ALTER TABLE "entries" ADD FOREIGN KEY ("account_id") REFERENCES "accounts" ("id");
 

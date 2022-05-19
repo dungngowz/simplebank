@@ -7,7 +7,7 @@ Project simple_bank {
 
 Table users as U {
   id bigserial [pk]
-  username varchar
+  username varchar [not null]
   hashed_password varchar [not null]
   fullname varchar [not null]
   email varchar [unique, not null]
@@ -15,16 +15,16 @@ Table users as U {
   created_at timestamptz [not null, default: `now()`]
 }
 
-Table accounts as A{ 
+Table accounts as A{
   id bigserial [pk]
-  owner bigserial [ref: > U.id, not null]
+  user_id bigserial [ref: > U.id, not null]
   balance bigint [not null]
   currency varchar [not null]
   created_at timestamptz [not null, default: `now()`]
   
   Indexes{
-    owner
-    (owner, currency) [unique]
+    user_id
+    (user_id, currency) [unique]
   }
 }
 
@@ -52,4 +52,3 @@ Table transfers{
     (from_account_id, to_account_id)
   }
 }
-
