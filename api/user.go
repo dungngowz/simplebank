@@ -8,23 +8,31 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type createUserParams struct {
-	Username       string `json:"username" binding:"required,alphanum"`
-	HashedPassword string `json:"hashedPassword" binding:"required,min=6"`
-	Fullname       string `json:"fullname" binding:"required"`
-	Email          string `json:"email" binding:"required,email"`
+//////////////////////////////////// CREATE USER ////////////////////////////////////////////////////////////
+type createUserRequest struct {
+	Username string `json:"username" binding:"required,alphanum"`
+	Password string `json:"password" binding:"required,min=6"`
+	Fullname string `json:"fullname" binding:"required"`
+	Email    string `json:"email" binding:"required,email"`
 }
 
 func (server *Server) createUser(ctx *gin.Context) {
-	var req createUserParams
+	var req createUserRequest
 
-	if err := ctx.ShouldBind(&req); err != nil {
+	if err := ctx.ShouldBindJSON(&req); err != nil {
 		util.ErrorBadRequest(ctx, err)
+		return
+	}
+
+	hashedPassword, err := util.HashedPassword(req.Password)
+	if err != nil {
+		util.ErrorInternalServer(ctx, err)
+		return
 	}
 
 	args := db.CreateUserParams{
 		Username:       req.Username,
-		HashedPassword: req.HashedPassword,
+		HashedPassword: hashedPassword,
 		Fullname:       req.Fullname,
 		Email:          req.Email,
 	}
@@ -32,6 +40,7 @@ func (server *Server) createUser(ctx *gin.Context) {
 	user, err := server.store.CreateUser(ctx, args)
 	if err != nil {
 		util.ErrorBadRequest(ctx, err)
+		return
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{

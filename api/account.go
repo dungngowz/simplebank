@@ -17,6 +17,7 @@ func (server *Server) createAccount(ctx *gin.Context) {
 	var req createAccountRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
 		util.ErrorBadRequest(ctx, err)
+		return
 	}
 
 	args := db.CreateAccountParams{
@@ -28,6 +29,7 @@ func (server *Server) createAccount(ctx *gin.Context) {
 	account, err := server.store.CreateAccount(ctx, args)
 	if err != nil {
 		util.ErrorBadRequest(ctx, err)
+		return
 	}
 
 	ctx.JSON(http.StatusOK, account)

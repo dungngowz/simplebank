@@ -37,9 +37,9 @@ run-container-app:
 	docker run --name simple_bank -e GIN_MODE=release --network bank_network -e DB_SOURCE="postgresql://root:secret@postgres14:5432/simple_bank?sslmode=disable" -p 8080:8080 simple_bank:latest
 
 db_doc:
-	dbdocs build doc/db.dbml   
+	dbdocs build docs/db.dbml   
 
 db_schema:
-	dbml2sql --postgres -o doc/schema.sql doc/db.dbml 
+	dbml2sql --postgres -o docs/schema.sql doc/db.dbml 
 
 .PHONY: postgres createdb dropdb migrateup migrateup_1 migratedown migratedown_1 sqlc test server build-image run-container db_doc db_schema

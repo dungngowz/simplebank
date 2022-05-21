@@ -1,0 +1,10 @@
+# Auth
+
+# @name login-user
+POST {{baseUrl}}/login-user
+Content-Type: application/json
+
+{
+  "username": "dungngo12",
+  "password": "12345678"
+}

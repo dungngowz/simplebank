@@ -5,8 +5,8 @@ POST {{baseUrl}}/users
 Content-Type: application/json
 
 {
-  "username": "!@#",
-  "hashedPassword": "EUR",
-  "fullname": "fullname",
-  "email": "email"
+  "username": "dungngo",
+  "password": "12345678",
+  "fullname": "12",
+  "email": "dung.ngowz@gmail.com"
 }
